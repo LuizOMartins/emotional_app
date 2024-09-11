@@ -4,14 +4,14 @@ import Slider from '@react-native-community/slider';
 
 interface ModalFormularioAvaliacaoPositivaProps {
     visible: boolean;
-    handleClose: () => void;
+    onClose: () => void;
     onSubmit: (formData: any) => void;
-    initialValues?: any; // Você pode definir um tipo específico para initialValues se souber o formato exato dos dados
+    initialValues?: any;
 }
 
 export default function ModalFormularioAvaliacaoPositiva({
     visible,
-    handleClose,
+    onClose,
     onSubmit,
     initialValues,
 }: ModalFormularioAvaliacaoPositivaProps) {
@@ -40,15 +40,12 @@ export default function ModalFormularioAvaliacaoPositiva({
         }
     }, [initialValues]);
 
-    const handleChange = useCallback(
-        (name: keyof typeof formData, value: number) => {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-        },
-        [formData]
-    );
+    const handleChange = useCallback((name: keyof typeof formData, value: number) => {
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    }, [formData]);
 
     const handleSubmit = () => {
         const dataAvaliacao = new Date().toISOString().split('T')[0]; // Preenche com a data atual
@@ -60,7 +57,7 @@ export default function ModalFormularioAvaliacaoPositiva({
             visible={visible}
             animationType="slide"
             transparent={true}
-            onRequestClose={handleClose}
+            onRequestClose={onClose}
         >
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
@@ -90,10 +87,8 @@ export default function ModalFormularioAvaliacaoPositiva({
                         />
                     </View>
 
-                    {/* Repita o padrão para os outros campos */}
-
                     <View style={styles.actions}>
-                        <Button title="Cancelar" onPress={handleClose} />
+                        <Button title="Cancelar" onPress={onClose} />
                         <Button title={initialValues ? 'Atualizar Avaliação' : 'Enviar Avaliação'} onPress={handleSubmit} />
                     </View>
                 </View>

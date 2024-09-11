@@ -5,6 +5,7 @@ import Slider from '@react-native-community/slider';
 interface ModalFormularioAvaliacaoNegativaProps {
     visible: boolean;
     handleClose: () => void;
+    onClose: () => void;
     onSubmit: (formData: any) => void;
     initialValues?: any;
 }
@@ -12,6 +13,7 @@ interface ModalFormularioAvaliacaoNegativaProps {
 export default function ModalFormularioAvaliacaoNegativa({
     visible,
     handleClose,
+    onClose,
     onSubmit,
     initialValues,
 }: ModalFormularioAvaliacaoNegativaProps) {
@@ -54,7 +56,7 @@ export default function ModalFormularioAvaliacaoNegativa({
             visible={visible}
             animationType="slide"
             transparent={true}
-            onRequestClose={handleClose}
+            onRequestClose={onClose}
         >
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
@@ -98,7 +100,7 @@ export default function ModalFormularioAvaliacaoNegativa({
                     {/* Repita para os outros campos, seguindo o padrão acima */}
 
                     <View style={styles.actions}>
-                        <Button title="Cancelar" onPress={handleClose} />
+                        <Button title="Cancelar" onPress={onClose} />
                         <Button title={initialValues ? 'Atualizar Avaliação' : 'Enviar Avaliação'} onPress={handleSubmit} />
                     </View>
                 </View>
