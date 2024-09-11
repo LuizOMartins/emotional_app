@@ -4,7 +4,6 @@ import Slider from '@react-native-community/slider';
 
 interface ModalFormularioAvaliacaoNegativaProps {
     visible: boolean;
-    handleClose: () => void;
     onClose: () => void;
     onSubmit: (formData: any) => void;
     initialValues?: any;
@@ -12,7 +11,6 @@ interface ModalFormularioAvaliacaoNegativaProps {
 
 export default function ModalFormularioAvaliacaoNegativa({
     visible,
-    handleClose,
     onClose,
     onSubmit,
     initialValues,
