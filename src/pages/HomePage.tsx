@@ -9,15 +9,18 @@ import GraficoHistoricoAvaliacoes from '../components/GraficoHistoricoAvaliacoes
 import { View, Text, Button, ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import ModalFormularioAvaliacaoPositiva from '../components/ModalFormularioAvaliacaoPositiva';
 import ModalFormularioAvaliacaoNegativa from '../components/ModalFormularioAvaliacaoNegativa';
-// ModalFormularioAvaliacaoNegativa from '../components/modals/ModalFormularioAvaliacaoNegativa';
-
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
+interface Avaliacao {
+    dataAvaliacao: string;
+    userId: string;
+}
+
 export default function HomePage() {
     const [userId, setUserId] = useState<string | null>(null);
-    const [avaliacoesPositivas, setAvaliacoesPositivas] = useState([]);
-    const [avaliacoesNegativas, setAvaliacoesNegativas] = useState([]);
+    const [avaliacoesPositivas, setAvaliacoesPositivas] = useState<Avaliacao[]>([]);
+    const [avaliacoesNegativas, setAvaliacoesNegativas] = useState<Avaliacao[]>([]);
     const [isFormDisabledPositiva, setIsFormDisabledPositiva] = useState(false);
     const [isFormDisabledNegativa, setIsFormDisabledNegativa] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -28,8 +31,7 @@ export default function HomePage() {
 
     const navigation = useNavigation<NavigationProps>();
 
-
-    const { logout } = useContext(AuthContext); // Use o contexto para gerenciar logout
+    const { logout } = useContext(AuthContext);
 
     // Verificar se o usuário está autenticado
     useEffect(() => {
@@ -62,7 +64,7 @@ export default function HomePage() {
 
             const hoje = new Date().toISOString().split('T')[0];
             const existeAvaliacaoPositivaHoje = responsePositivas.data.data.some(
-                (avaliacao) => avaliacao.dataAvaliacao === hoje && avaliacao.userId === userId
+                (avaliacao: Avaliacao) => avaliacao.dataAvaliacao === hoje && avaliacao.userId === userId
             );
             setIsFormDisabledPositiva(existeAvaliacaoPositivaHoje);
             if (existeAvaliacaoPositivaHoje) {
@@ -73,7 +75,7 @@ export default function HomePage() {
             setAvaliacoesNegativas(responseNegativas.data.data);
 
             const existeAvaliacaoNegativaHoje = responseNegativas.data.data.some(
-                (avaliacao) => avaliacao.dataAvaliacao === hoje && avaliacao.userId === userId
+                (avaliacao: Avaliacao) => avaliacao.dataAvaliacao === hoje && avaliacao.userId === userId
             );
             setIsFormDisabledNegativa(existeAvaliacaoNegativaHoje);
             if (existeAvaliacaoNegativaHoje) {
@@ -168,6 +170,7 @@ export default function HomePage() {
     );
 }
 
+// Definições de estilos
 const styles = StyleSheet.create({
     container: {
         flex: 1,
