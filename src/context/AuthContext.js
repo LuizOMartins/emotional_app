@@ -1,37 +1,35 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Criação do contexto sem tipos, já que estamos usando JavaScript
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Função para verificar autenticação ao carregar o aplicativo
   useEffect(() => {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
-      setIsAuthenticated(!!token);
+      setIsAuthenticated(!!token); // Se o token existir, autentica
     };
     checkToken();
   }, []);
 
-  // Função de login
   const login = async (token) => {
     try {
       await AsyncStorage.setItem('token', token);
-      setIsAuthenticated(true);
+      setIsAuthenticated(true); // Autentica o usuário ao fazer login
     } catch (error) {
-      console.error("Erro ao salvar o token no AsyncStorage", error);
+      console.error('Erro ao salvar o token no AsyncStorage', error);
     }
   };
 
-  // Função de logout
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('token');
-      setIsAuthenticated(false);
+      setIsAuthenticated(false); // Desloga o usuário ao remover o token
     } catch (error) {
-      console.error("Erro ao remover o token do AsyncStorage", error);
+      console.error('Erro ao remover o token do AsyncStorage', error);
     }
   };
 
