@@ -4,9 +4,24 @@ import React, { useState, useEffect } from 'react';
 import { LineChart } from 'react-native-chart-kit';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
-export default function GraficoHistoricoAvaliacoes({ userId }) {
-    const [historicoPositivo, setHistoricoPositivo] = useState([]);
-    const [historicoNegativo, setHistoricoNegativo] = useState([]);
+// Define interfaces para os dados de avaliação
+interface AvaliacaoPositiva {
+    dataAvaliacao: string;
+    fe: number;
+    paciencia: number;
+    // Adicione mais propriedades conforme necessário
+}
+
+interface AvaliacaoNegativa {
+    dataAvaliacao: string;
+    medo: number;
+    raiva: number;
+    // Adicione mais propriedades conforme necessário
+}
+
+export default function GraficoHistoricoAvaliacoes() {
+    const [historicoPositivo, setHistoricoPositivo] = useState<AvaliacaoPositiva[]>([]);
+    const [historicoNegativo, setHistoricoNegativo] = useState<AvaliacaoNegativa[]>([]);
     const [selectedChart, setSelectedChart] = useState('positivo');
     const [dataInicio, setDataInicio] = useState('');
     const [dataFim, setDataFim] = useState('');
@@ -27,10 +42,9 @@ export default function GraficoHistoricoAvaliacoes({ userId }) {
             const response = await api.get(`/avaliacoes/positiva?dataInicio=${dataInicio}&dataFim=${dataFim}`);
             setHistoricoPositivo(response.data.data || []); // Garante que sempre será um array
         } catch (error) {
-            console.error('Erro ao buscar o histórico de avaliações positivas:', error);
+            console.error('Erro ao buscar o histórico de avaliações');
         }
-    };
-
+    }
     // Função para buscar o histórico de avaliações negativas
     const fetchHistoricoNegativo = async () => {
         try {
@@ -58,13 +72,13 @@ export default function GraficoHistoricoAvaliacoes({ userId }) {
         const datasets = selectedChart === 'positivo'
             ? [
                 {
-                    data: historicoPositivo.map((avaliacao) => avaliacao.fe),
+                    data: historicoPositivo.map((avaliacao) => avaliacao.fe), // Acessa a propriedade 'fe' em AvaliacaoPositiva
                     strokeWidth: 2, // optional
                 },
             ]
             : [
                 {
-                    data: historicoNegativo.map((avaliacao) => avaliacao.medo),
+                    data: historicoNegativo.map((avaliacao) => avaliacao.medo), // Acessa a propriedade 'medo' em AvaliacaoNegativa
                     strokeWidth: 2, // optional
                 },
             ];
