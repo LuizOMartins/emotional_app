@@ -7,8 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import GraficoHistoricoAvaliacoes from '../components/GraficoHistoricoAvaliacoes';
 import { View, Text, Button, ActivityIndicator, Alert, StyleSheet } from 'react-native';
-// import ModalFormularioAvaliacaoPositiva from '../components/modals/ModalFormularioAvaliacaoPositiva';
-// import ModalFormularioAvaliacaoNegativa from '../components/modals/ModalFormularioAvaliacaoNegativa';
+import ModalFormularioAvaliacaoPositiva from '../components/ModalFormularioAvaliacaoPositiva';
+import ModalFormularioAvaliacaoNegativa from '../components/ModalFormularioAvaliacaoNegativa';
+// ModalFormularioAvaliacaoNegativa from '../components/modals/ModalFormularioAvaliacaoNegativa';
 
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
