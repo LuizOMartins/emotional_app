@@ -163,7 +163,7 @@ export default function HomePage() {
                         onSubmit={handleNegativeSubmit}
                     />
 
-                    <GraficoHistoricoAvaliacoes userId={userId} />
+                    <GraficoHistoricoAvaliacoes />
                 </View>
             )}
         </View>
