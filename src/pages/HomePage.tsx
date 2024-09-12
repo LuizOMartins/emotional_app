@@ -30,8 +30,14 @@ export default function HomePage() {
     const [isModalNegativoOpen, setIsModalNegativoOpen] = useState(false);
 
     const navigation = useNavigation<NavigationProps>();
+    const authContext = useContext(AuthContext);
 
-    const { logout } = useContext(AuthContext);
+    if (!authContext) {
+        console.error('AuthContext não está disponível');
+        return null;
+    }
+
+    const { login } = authContext;
 
     // Verificar se o usuário está autenticado
     useEffect(() => {

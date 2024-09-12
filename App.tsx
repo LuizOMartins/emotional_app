@@ -12,7 +12,8 @@ export default function App() {
 }
 
 function AuthenticatedApp() {
-  const authContext = useContext(AuthContext);  // Verificar o contexto antes de acessar
+  const authContext = useContext(AuthContext);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ function AuthenticatedApp() {
     checkAuth();
   }, []);
 
+  // Verifica se o contexto ou o estado de autenticação estão carregando ou indisponíveis
   if (loading || authContext === null) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -32,5 +34,6 @@ function AuthenticatedApp() {
     );
   }
 
-  return <AppNavigator isAuthenticated={!!authContext.isAuthenticated} />;  // Garantir que o contexto existe antes de acessar
+  // Acessa isAuthenticated apenas se authContext não for nulo
+  return <AppNavigator isAuthenticated={!!authContext.isAuthenticated} />;
 }

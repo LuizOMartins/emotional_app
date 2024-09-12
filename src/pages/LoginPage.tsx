@@ -12,13 +12,20 @@ type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 export default function LoginPage() {
     const navigation = useNavigation<NavigationProps>();
-
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const application = 'emotional';
-    const { login } = useContext(AuthContext);
+
+    const authContext = useContext(AuthContext);
+
+    if (!authContext) {
+        console.error('AuthContext não está disponível');
+        return null;
+    }
+
+    const { login } = authContext;
+
 
     const handleSubmit = async () => {
         try {
